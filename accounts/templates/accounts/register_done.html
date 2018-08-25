@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block heading_page %} Register done {% endblock %}
+
+{% block content %} 
+<div class="row">
+  <div class="col">
+    <p>Your registration was completed, you can <a href="{% url 'accounts:login' %}">login</a></p>
+  </div>
+</div>
+{% endblock %}

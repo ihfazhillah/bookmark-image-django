@@ -1,0 +1,18 @@
+
+{% extends 'base.html' %}
+
+{% block heading_page %}Edit Profile{% endblock %}  
+
+{% block content %} 
+<div class="row">
+  <div class="col">
+    <form action="." method="post" enctype='multipart/form-data'>
+      {{ user_form }}
+      {{ profile_form }}
+      {% csrf_token %}
+      <input class="btn btn-success btn-lg" type="submit" value="Edit">
+    </form>
+  </div>
+</div>
+{% endblock %}
+

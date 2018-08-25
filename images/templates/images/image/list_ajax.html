@@ -1,0 +1,12 @@
+{% load thumbnail %}
+
+{% for image in images %}
+<div class="col-lg-3 col-md-4 col-xs-6">
+  <a href="{{ image.get_absolute_url }}" class="d-block mb-4 h-100">
+    {% thumbnail image.image "300x300" crop="100%" as im %}
+      <img class="img-fluid img-thumbnail" src="{{ im.url }}" alt="">
+    {% endthumbnail %}
+  <p>{{ image.title }}</p>
+  </a>
+</div>
+{% endfor %}

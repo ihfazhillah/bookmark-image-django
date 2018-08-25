@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block heading_page %}Logged out successfully{% endblock %}
+
+{% block content %}
+
+<div class="col-md-9 mx-auto text-center">
+  You successfully logged out. You can <a href="{% url 'accounts:login' %}">login</a> again.
+</div>
+
+{% endblock %}

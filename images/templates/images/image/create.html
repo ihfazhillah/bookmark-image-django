@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block heading_page %}Bookmark new image{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6"><img class='img img-fluid' src="{{ request.GET.url }}" alt=""></div>
+  <div class="col-md-6">
+    <form action="." method="post">
+      {{ form | crispy}}
+      {% csrf_token %}
+      <input type="submit" class="btn btn-info" value="Bookmark it">
+    </form>
+  </div>
+</div>
+{% endblock %}

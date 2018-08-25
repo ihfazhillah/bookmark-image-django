@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block heading_page %}Login{% endblock %}
+{% block content %}
+
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+{% if form.errors %}
+<p class='text-center text-danger'>The username or password didn't match</p>
+{% endif %}
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Sign In</h5>
+            <form class="form-signin" method="post" action="{% url 'accounts:login' %}">
+              {% include 'accounts/snippets/fields.html' with form=form %}
+        {% csrf_token %}
+        <input type="hidden" name="next" value={{ next }}>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+							<a class="btn btn-lg btn-block text-uppercase" href="{% url 'accounts:password_reset' 'accounts:password_reset_done' %}">Forgot Password?</a>
+							<a class="btn btn-lg btn-block text-uppercase" href="{% url 'accounts:register' %}">Register</a>
+              <hr class="my-4">
+              <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-lg btn-google btn-block text-uppercase" ><i class="fab fa-google mr-2"></i> Sign in with Google</a>
+              <a class="btn btn-lg btn-facebook btn-block text-uppercase" href="{% url 'social:begin' 'facebook' %}"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</a>
+            </form>
+          </div>
+        </div>
+      </div>
+{% endblock %}

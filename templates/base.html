@@ -1,0 +1,191 @@
+{% load static %}
+{% url 'dashboard' as dashboard_url %}
+{% url 'images:list' as images_list %}
+{% url 'accounts:list' as users_list %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Thumbnail Gallery - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/thumbnail-gallery.css' %}" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Bookmarks</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          {% if request.user.is_authenticated %}
+          <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item {% if request.path == dashboard_url %}active{% endif %}">
+              <a class="nav-link" href="{{ dashboard_url }}">Dashboard
+                {% if request.path == dashboard_url %}
+                <span class="sr-only">(current)</span>
+                {% endif %}
+              </a>
+            </li>
+
+            <li class="nav-item {% if images_list in request.path %}active{% endif %}">
+              <a class="nav-link" href="{{ images_list }}">Images
+                {% if images_list in request.path %}
+                <span class="sr-only">(current)</span>
+                {% endif %}
+              </a>
+            </li>
+
+            <li class="nav-item {% if  users_list in request.path %}active{% endif %}">
+              <a class="nav-link" href="{{ users_list }}">Peoples
+                {% if  users_list in request.path %}
+                <span class="sr-only">(current)</span>
+                {% endif %}
+              </a>
+            </li>
+          </ul>
+          {% endif %}
+              {% if request.user.is_authenticated %}
+              <span class="navbar-text">Welcome {{ request.user.username }}, <a class href="{% url 'accounts:logout' %}">Logout</a></span>
+              {% else %}
+              <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
+            </li>
+              </ul>
+              {% endif %}
+
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+      {% include 'snippets/messages.html' %}
+      <h1 class="my-4 text-center text-lg-left">{% block heading_page %}Thumbnail Gallery{% endblock %}</h1>
+      <hr>
+
+      <div class="row text-center text-lg-left">
+        {% block content %}
+
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="#" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+          </a>
+        </div>
+        {% endblock %}
+      </div>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <script>
+      var csrftoken = $.cookie('csrftoken');
+      function csrfSafeMethod(method){
+        return /^(GET|OPTIONS|HEAD|TRACE)$/.test(method);
+      }
+
+      $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain){
+            xhr.setRequestHeader('X-CSRFToken', csrftoken);
+          }
+        }
+      });
+      jQuery(document).ready(function(){
+        {% block domready %}
+        {% endblock %}
+      });
+        
+    </script>
+
+  </body>
+
+</html>

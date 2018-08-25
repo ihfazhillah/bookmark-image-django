@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block heading_page %}Images Rangking{% endblock %}
+
+{% block content %}
+<ol>
+  {% for image in images %}
+  <li><a href="{{ image.get_absolute_url }}">{{ image.title }}</a></li>
+  {% endfor %}
+</ol>
+{% endblock %}

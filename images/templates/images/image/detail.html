@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block heading_tag %}{{ image.title | title }}{% endblock %}
+
+{% block content %}
+  {% thumbnail image.image '400x400' as im %}
+  <div class="col-md-6"><a href="{{ image.image.url }}">
+      <img class="img img-responsive" src="{{ im.url }}" alt="">
+    </a>
+  </div>
+  {% endthumbnail %}
+  <div class="col-md-6">
+        {% with total_likes=image.users_like.count users_like=image.users_like.all %}
+        <div class='row'>
+          <div class='col-xs-4 rounded border border-info p-2'><span class='total-like'>{{ total_likes }}</span> like{{ total_likes|pluralize }}</div> 
+          <div class="col-xs-4 rounded border border-info p-2 ml-2">
+            {{ total_views }} view{{total_views|pluralize}}
+          </div>
+          <div class="col-xs-4 ml-auto">
+          <a 
+           class="btn btn-info btn-sm like" href="#" data-id='{{ image.id }}' data-action='{% if request.user in users_like %}un{% endif %}like'>
+            {% if request.user in users_like %}
+            Unlike
+            {% else %}
+            Like
+            {% endif %}
+          </a>
+          </div>
+        </div>
+        {% endwith %}
+        <div class="row mt-5">
+          <div class="col">
+             {{ image.description }}
+          </div>
+        </div>
+
+
+        <div class="image-likes row mt-4">
+          {% for liker in image.users_like.all %}
+          <div class="col" >
+            {% if liker.profile.photo %}
+            {% thumbnail liker.profile.photo '50x50' crop='100%' as img %}
+              <img class="img-thumbnail rounded-circle img" src="{{ img.url }}" alt="{{ liker.first_name }}">
+            {% endthumbnail %}
+            {% endif %}
+            <p class="small text-muted">{{ liker.first_name }}</p>
+          </div>
+          {% empty %}
+          <p class="small text-muted">Nobody likes this image yet</p>
+          {% endfor %}
+        </div>
+  </div>
+{% endblock %}
+
+{% block domready %}
+
+jQuery('a.like').click(function(e){
+  e.preventDefault();
+  jQuery.post("{% url 'images:like' %}",
+    {
+      image_id: jQuery(this).data('id'),
+      action: jQuery(this).data('action')
+    },
+    function(data){
+      if (data.status == 'ok'){
+        var prev_action = jQuery(this).data('action');
+        var prev_likes = parseInt(jQuery('.total-like').text());
+
+        jQuery('a.like').data('action', prev_action == 'like' ? 'unlike' : 'like');
+        jQuery('a.like').text(prev_action == 'like'? 'Unlike' : 'Like');
+        jQuery('.total-like').text(prev_action == 'like'? prev_likes + 1 : prev_likes - 1);
+
+      }
+    });
+});
+
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block heading_page %}People{% endblock %}
+
+{% block content %}
+{% for user in users %}
+ <div class="col-lg-3 col-md-4 col-xs-6">
+   <a href="{{ user.profile.get_absolute_url }}" class="d-block mb-4 h-100">
+     {% thumbnail user.profile.photo '300x300' as im %}
+     <img class="img-fluid img-thumbnail rounded-circle" src="{{ im.url }}" alt="">
+     {% endthumbnail %}
+     <p>{{ user.username }}</p>
+    </a>
+  </div>
+{% endfor %}
+{% endblock %}

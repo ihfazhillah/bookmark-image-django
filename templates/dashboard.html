@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block heading_page %}Dashboard{% endblock %}
+
+
+{% block content %}
+
+<div class="col">
+  <div class="row">
+    <div class="col">
+      <h4>Activity Stream</h4>
+      <hr>
+      {% for action in actions %}
+        {% include 'actions/detail.html' with action=action %}
+      {% empty %}
+        <p>No activity yet.</p>
+      {% endfor %}
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+	{% with total_images=request.user.images_created.count %}
+		<p>Welcome to your dashboard. Currently, you have bookmark {{ total_images }} image{{ total_images | pluralize }}</p>
+	{% endwith %}
+
+	<p>Drag the following button to your bookmark toolbar to bookmark images from another website <a class="btn btn-info" href="javascript:{% include 'bookmarklet_launcher.js' %}">Bookmark It</a></p>
+  <p>You also can <a href="{% url 'accounts:edit-profile' %}">edit profile</a> or <a href="{% url 'accounts:password-change' 'accounts:password_change_done' %}">change your password</a></p>
+</div>
+    </div>
+  </div>
+
+{% endblock %}

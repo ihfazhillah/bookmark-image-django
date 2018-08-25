@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block heading_page %}{{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="row mx-auto"><div class="col-md-6">
+    {% thumbnail user.profile.photo '500x500' crop='100%' as im %}
+      <img class="img-thumbnail rounded-circle" src="{{ im.url }}" alt="">
+    {% endthumbnail %}
+  </div>
+  <div class="col-md-6 text-center">
+    {% with followers=user.followers.count %}
+    <div id="follower" class='border border-info rounded text-center'>
+      <span class=""><span id="total">{{ followers }}</span>
+        follower{{ followers|pluralize }}
+      </span>
+    </div>
+    {% endwith %}
+
+    {% if user != request.user %}
+    <button id='follow-btn' data-id="{{ user.id }}" data-action="{% if request.user in user.followers.all %}un{% endif %}follow" class='btn btn-block mt-4 btn-info'>
+      {% if request.user in user.followers.all %}Unfollow{% else %}Follow{% endif %}
+    </button>
+    {% endif %}
+  </div>
+
+</div>
+
+<div class="row mt-5" id='image-list'>
+  {% include 'images/image/list_ajax.html' with images=user.images_created.all %}
+</div>
+{% endblock %}
+
+{% block domready %}
+$('#follow-btn').click(function(e){
+  e.preventDefault();
+  $.post('{% url "accounts:follow" %}', {
+    'id': $(this).data('id'),
+    'action': $(this).data('action')
+  }, function(data){
+    if (data.status == 'ok'){
+      var previous_action = $('#follow-btn').data('action');
+
+      // toggle action
+      $('#follow-btn').data('action', previous_action == 'follow' ? 'unfollow' : 'follow');
+
+      // toggle link text
+      $('#follow-btn').text(previous_action == 'follow' ? 'Unfollow' : 'Follow');
+
+      // update total followers
+      var previous_followers = parseInt(
+        $('#total').text());
+      $('#total').text(previous_action == 'follow' ? previous_followers + 1 : previous_followers -1)
+    }
+  })
+})
+
+{% endblock %}
